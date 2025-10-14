@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Input } from "./input";
 export function Step2({ increaseStep, reduceStep }) {
   return (

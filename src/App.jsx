@@ -14,7 +14,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="w-screen h-screen justify-center items-center flex ">
       {step === 1 && <Step1 increaseStep={increaseStep} />}
       {step === 2 && (
         <Step2 increaseStep={increaseStep} reduceStep={reduceStep} />
