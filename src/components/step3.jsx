@@ -11,14 +11,14 @@ export function Step3({ increaseStep, reduceStep }) {
 
   const validateDob = (date) => {
     if (!date) return "Date of birth is required.";
-
     return "";
   };
 
   const validateProfileImage = (file) => {
     if (!file) return "Profile image is required.";
     const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-    if (!allowedTypes.includes(file.type)) return "Only JPG, PNG, GIF allowed.";
+    if (!allowedTypes.includes(file.type))
+      return "Only JPG, PNG, or GIF allowed.";
     return "";
   };
 
@@ -54,15 +54,16 @@ export function Step3({ increaseStep, reduceStep }) {
   };
 
   return (
-    <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
-      <div className="w-[480px] h-[655px]  flex flex-col justify-between items-center bg-white rounded-lg p-8">
-        <div className="">
-          <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]"></div>
+    <div className="w-full h-full flex justify-center items-center bg-[#f4f4f4]">
+      <div className="w-[480px] h-[655px] flex flex-col justify-between items-center bg-white rounded-lg p-8">
+        <div>
+          <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px] bg-no-repeat bg-center"></div>
           <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
           <p className="font-normal text-[#838383] mt-1">
             Please provide all current information accurately.
           </p>
 
+          
           <div className="flex flex-col space-y-1 w-full mt-8">
             <label
               htmlFor="dob"
@@ -83,50 +84,74 @@ export function Step3({ increaseStep, reduceStep }) {
               }`}
               required
             />
-            {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
+            {errors.dob && (
+              <p className="text-red-500 text-sm">{errors.dob}</p>
+            )}
+          </div>
 
-            <div className="flex flex-col space-y-1 w-full mt-2">
+          
+          <div className="flex flex-col space-y-1 w-full mt-4">
+            <label
+              htmlFor="image-upload"
+              className="text-sm font-medium text-gray-700"
+            >
+              Profile image <span className="text-red-500">*</span>
+            </label>
+
+            <div className="w-[416px] h-[180px] border-2 border-solid border-gray-300 rounded-xl flex justify-center items-center bg-gray-50 cursor-pointer">
               <label
-                htmlFor="profile"
-                className="text-sm font-medium text-gray-700 w-[416px]"
+                htmlFor="image-upload"
+                className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-gray-900"
               >
-                Profile image <span className="text-red-500">*</span>
+                <input
+                  type="file"
+                  id="image-upload"
+                  name="profile"
+                  hidden
+                  onChange={handleProfileImageChange}
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+                <span>Add image</span>
               </label>
-              <input
-                type="file"
-                id="IMAGE-UPLOAD"
-                name="profile"
-                accept="image/jpeg,image/png,image/gif"
-                onChange={handleProfileImageChange}
-                className={` rounded-md border px-3 py-2 placeholder-gray-400 h-min-[180px]${
-                  errors.profileImage
-                    ? "border-red-500 focus:ring-red-500"
-                    : "border-gray-300 focus:ring-blue-500"
-                }`}
-                required
-              />
-              {errors.profileImage && (
-                <p className="text-red-500 text-sm">{errors.profileImage}</p>
-              )}
             </div>
+
+            {errors.profileImage && (
+              <p className="text-red-500 text-sm">{errors.profileImage}</p>
+            )}
           </div>
         </div>
 
         <div className="gap-[8px] flex mt-[8px]">
           <button
-            className="w-[128px] min-h-[44px] cursor-pointer border bg-white  active:bg-[#e5e5e5] hover:bg-[#e0e0e2] text-black rounded-md"
+            type="button"
             onClick={reduceStep}
+            className="w-[128px] min-h-[44px] border bg-white active:bg-[#e5e5e5] hover:bg-[#e0e0e2] text-black rounded-md"
           >
             &lt; Back
           </button>
+
           <button
-            className={`w-[280px] min-h-[44px] cursor-pointer rounded-md text-white hover:bg-[#39393a] ${
-              isValid
-                ? "bg-[#121416]  active:bg-[#4c4c4c]"
-                : "bg-[#121416] cursor-not-allowed"
-            }`}
+            type="button"
             onClick={handleContinue}
             disabled={!isValid}
+            className={`w-[280px] min-h-[44px] rounded-md text-white hover:bg-[#39393a] ${
+              isValid
+                 ? "bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c]"
+                    : "bg-[#121416] cursor-pointer"
+            }`}
           >
             Continue 3/3 &gt;
           </button>
@@ -135,3 +160,4 @@ export function Step3({ increaseStep, reduceStep }) {
     </div>
   );
 }
+
