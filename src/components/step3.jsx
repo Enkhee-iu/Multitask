@@ -1,71 +1,135 @@
-import { Input } from "./input";
+import React, { useState } from "react";
+
 export function Step3({ increaseStep, reduceStep }) {
+  const [dob, setDob] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+
+  const [errors, setErrors] = useState({
+    dob: "",
+    profileImage: "",
+  });
+
+  const validateDob = (date) => {
+    if (!date) return "Date of birth is required.";
+
+    return "";
+  };
+
+  const validateProfileImage = (file) => {
+    if (!file) return "Profile image is required.";
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+    if (!allowedTypes.includes(file.type)) return "Only JPG, PNG, GIF allowed.";
+    return "";
+  };
+
+  const handleDobChange = (e) => {
+    const value = e.target.value;
+    setDob(value);
+    setErrors((prev) => ({ ...prev, dob: validateDob(value) }));
+  };
+
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+    setErrors((prev) => ({
+      ...prev,
+      profileImage: validateProfileImage(file),
+    }));
+  };
+
+  const isValid = !errors.dob && !errors.profileImage && dob && profileImage;
+
+  const handleContinue = () => {
+    const dobError = validateDob(dob);
+    const profileError = validateProfileImage(profileImage);
+
+    setErrors({
+      dob: dobError,
+      profileImage: profileError,
+    });
+
+    if (!dobError && !profileError) {
+      increaseStep();
+    }
+  };
+
   return (
     <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
-      <div className="w-[480px] h-[655px] flex flex-col justify-start items-center bg-white rounded-lg">
-        <div className="w-[416px] h-[358px] flex flex-col justify-start items-start gap-[20px] pt-[32px]">
-          <div>
-            <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]  "></div>
-            <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
-            <p className="font-normal text-[#838383] mt-1 ">
-              Please provide all current information accurately.
-            </p>
-          </div>
+      <div className="w-[480px] h-[655px]  flex flex-col justify-between items-center bg-white rounded-lg p-8">
+        <div className="">
+          <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]"></div>
+          <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
+          <p className="font-normal text-[#838383] mt-1">
+            Please provide all current information accurately.
+          </p>
 
-          <div class="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 w-full mt-8">
             <label
-              for="dob"
-              class="text-sm font-medium text-gray-700 w-[416px] "
+              htmlFor="dob"
+              className="text-sm font-medium text-gray-700 w-[416px]"
             >
-              Date of birth <span class="text-red-500">*</span>
+              Date of birth <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
               id="dob"
               name="dob"
+              value={dob}
+              onChange={handleDobChange}
+              className={`w-full rounded-md border px-3 py-2 placeholder-gray-400 focus:outline-none ${
+                errors.dob
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-blue-500"
+              }`}
               required
-              class="w-full rounded-md border border-gray-300 px-3 py-2 
-
-           text-gray-700 placeholder-gray-400 focus:border-blue-500 
-
-           focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-          </div>
-          <div>
-            <label
-              for="dob"
-              class="text-sm font-medium text-gray-700 w-[416px] "
-            >
-              Profile image <span class="text-red-500">*</span>
-            </label>
-          </div>
-          <div className="w-[416px] min-h-[180px] bg-[#7F7F800D] rounded-xs flex gap-8px">
-            <div className="flex justify-center items-center">
-              <img src="./assets/icon.svg" alt="" />
+            {errors.dob && <p className="text-red-500 text-sm">{errors.dob}</p>}
+
+            <div className="flex flex-col space-y-1 w-full mt-2">
+              <label
+                htmlFor="profile"
+                className="text-sm font-medium text-gray-700 w-[416px]"
+              >
+                Profile image <span className="text-red-500">*</span>
+              </label>
               <input
-                className="w-[416px] min-h-[180px]"
                 type="file"
-                id="profile"
-                name="Add Image"
-                accept="image"
+                id="IMAGE-UPLOAD"
+                name="profile"
+                accept="image/jpeg,image/png,image/gif"
+                onChange={handleProfileImageChange}
+                className={` rounded-md border px-3 py-2 placeholder-gray-400 h-min-[180px]${
+                  errors.profileImage
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300 focus:ring-blue-500"
+                }`}
+                required
               />
+              {errors.profileImage && (
+                <p className="text-red-500 text-sm">{errors.profileImage}</p>
+              )}
             </div>
           </div>
+        </div>
 
-          <div className="gap-[8px] flex">
-            <button
-              className="w-[128px] min-h-[44px] cursor-pointer border  gap-[8px] bg-[#ffffff] hover:bg-[#efefef] active:bg-[#e5e5e5] text-[#000000] rounded-md mt-15 "
-              onClick={reduceStep}
-            >
-              &lt; Back
-            </button>
-            <button
-              className="w-[280px] min-h-[44px] cursor-pointer  gap-[8px] bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c] text-[#FFFFFF] rounded-md mt-15 "
-              onClick={increaseStep}
-            >
-              Continue 3/3 &gt;
-            </button>
-          </div>
+        <div className="gap-[8px] flex mt-[8px]">
+          <button
+            className="w-[128px] min-h-[44px] cursor-pointer border bg-white  active:bg-[#e5e5e5] hover:bg-[#e0e0e2] text-black rounded-md"
+            onClick={reduceStep}
+          >
+            &lt; Back
+          </button>
+          <button
+            className={`w-[280px] min-h-[44px] cursor-pointer rounded-md text-white hover:bg-[#39393a] ${
+              isValid
+                ? "bg-[#121416]  active:bg-[#4c4c4c]"
+                : "bg-[#121416] cursor-not-allowed"
+            }`}
+            onClick={handleContinue}
+            disabled={!isValid}
+          >
+            Continue 3/3 &gt;
+          </button>
         </div>
       </div>
     </div>

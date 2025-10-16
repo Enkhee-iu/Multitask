@@ -1,5 +1,5 @@
 import { Input } from "./input";
-export function Step4({ increaseStep, reduceStep }) {
+export function Step4() {
   return (
     <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
       <div className="w-[480px] h-[193px] flex flex-col justify-start items-center bg-white rounded-lg">

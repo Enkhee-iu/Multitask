@@ -65,25 +65,32 @@ export function Step1({ increaseStep }) {
     });
 
     if (!firstNameError && !lastNameError && !usernameError) {
-      increaseStep(); // зөв үед л дараагийн алхам руу орно
+      increaseStep();
     }
   };
 
   return (
     <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
-      <div className="w-[480px] h-[655px] flex flex-col justify-start items-center bg-white rounded-lg">
-        <div className="w-[416px] flex flex-col justify-start items-start gap-[20px] pt-[32px]">
+      <div
+        className="w-[480px] h-[655px]  flex flex-col justify-between
+       items-center bg-white rounded-lg p-[32px]"
+      >
+        <div>
           <div>
             <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]"></div>
             <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
-            <p className="font-normal text-[#838383] mt-1">
+            <p className="font-normal text-[#838383] ">
               Please provide all current information accurately.
             </p>
           </div>
 
-          <div className="gap-[8px] flex flex-col mt-1 w-full">
+          <div className="gap-[8px] flex  mt-6 flex-col w-[416px] min-h-[44px] ">
             <Input
-              label="First name *"
+              label={
+                <>
+                  First name <span style={{ color: "red" }}>*</span>
+                </>
+              }
               placeholder="Write your first name"
               value={firstName}
               onChange={handleFirstName}
@@ -96,7 +103,11 @@ export function Step1({ increaseStep }) {
               error={errors.firstName}
             />
             <Input
-              label="Last name *"
+              label={
+                <>
+                  Last name <span style={{ color: "red" }}>*</span>
+                </>
+              }
               placeholder="Write your last name"
               value={lastName}
               onChange={handleLastName}
@@ -109,7 +120,11 @@ export function Step1({ increaseStep }) {
               error={errors.lastName}
             />
             <Input
-              label="Username *"
+              label={
+                <>
+                  Username <span style={{ color: "red" }}>*</span>
+                </>
+              }
               placeholder="Write your username"
               value={username}
               onChange={handleUsername}
@@ -122,15 +137,17 @@ export function Step1({ increaseStep }) {
               error={errors.username}
             />
           </div>
+        </div>
 
+        <div className="flex items-end w-[416px] ">
           <button
             onClick={handleContinue}
             disabled={!isValid}
-            className={`w-[416px] min-h-[44px] mt-36 rounded-md text-white font-medium transition 
+            className={`w-[416px] min-h-[44px]  flex justify-center items-center cursor-pointer rounded-md text-white font-medium transition hover:bg-[#39393a]
               ${
                 isValid
                   ? "bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c]"
-                  : "bg-gray-300 cursor-not-allowed"
+                  : "bg-[#121416] cursor-not-allowed"
               }`}
           >
             Continue 1/3 &gt;

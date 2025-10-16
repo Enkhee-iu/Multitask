@@ -1,50 +1,3 @@
-// import React, { useState } from "react";
-// import { Input } from "./input";
-// export function Step2({ increaseStep, reduceStep }) {
-//   return (
-//     <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
-//       <div className="w-[480px] h-[655px] flex flex-col justify-start items-center bg-white rounded-lg">
-//         <div className="w-[416px] h-[358px] flex flex-col justify-start items-start gap-[20px] pt-[32px]">
-//           <div>
-//             <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]  "></div>
-//             <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
-//             <p className="font-normal text-[#838383] mt-1 ">
-//               Please provide all current information accurately.
-//             </p>
-//           </div>
-
-//           <div className="gap-[8px] flex flex-col mt-1 ">
-//             <Input label={"Email *"} placeholder={"Write your Email"} />
-//             <Input
-//               label={"Phone Number *"}
-//               placeholder={"Write your Phone Number"}
-//             />
-//             <Input label={"Password *"} placeholder={"Write your Password"} />
-//             <Input
-//               label={"Confirm password *"}
-//               placeholder={"Write your Confirm password"}
-//             />
-//           </div>
-//           <div className="gap-[8px] flex">
-//             <button
-//               className="w-[128px] min-h-[44px] cursor-pointer border  gap-[8px] bg-[#ffffff] hover:bg-[#efefef] active:bg-[#e5e5e5] text-[#000000] rounded-md mt-15 "
-//               onClick={reduceStep}
-//             >
-//               &lt; Back
-//             </button>
-//             <button
-//               className="w-[280px] min-h-[44px] cursor-pointer   gap-[8px] bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c] text-[#FFFFFF] rounded-md mt-15 "
-//               onClick={increaseStep}
-//             >
-//               Continue 2/3 &gt;
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState } from "react";
 import { Input } from "./input";
 
@@ -61,7 +14,6 @@ export function Step2({ increaseStep, reduceStep }) {
     confirmPassword: "",
   });
 
-  // Валидейшн функцууд
   const validateEmail = (email) => {
     if (!email.trim()) return "Cannot be empty.";
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,7 +38,6 @@ export function Step2({ increaseStep, reduceStep }) {
     return "";
   };
 
-  // Input-ууд өөрчлөгдөх үед алдаа шалгах
   const handleEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
@@ -148,97 +99,114 @@ export function Step2({ increaseStep, reduceStep }) {
 
   return (
     <div className="w-full h-full justify-center items-center flex bg-[#f4f4f4]">
-      <div className="w-[480px] h-[655px] flex flex-col justify-start items-center bg-white rounded-lg">
-        <div className="w-[416px] flex flex-col justify-start items-start gap-[20px] pt-[32px]">
-          <div>
-            <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]"></div>
-            <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
-            <p className="font-normal text-[#838383] mt-1">
-              Please provide all current information accurately.
-            </p>
-          </div>
+      <div
+        className="w-[480px] h-[655px]  flex flex-col justify-between
+       items-center bg-white rounded-lg p-[32px]"
+      >
+        <div className="mr-15">
+          <div className="bg-[url(./assets/main.svg)] w-[60px] h-[60px]"></div>
+          <h1 className="text-[26px] font-semibold">Join Us! 😎</h1>
+          <p className="font-normal text-[#838383] mt-1">
+            Please provide all current information accurately.
+          </p>
+        </div>
 
-          <div className="gap-[8px] flex flex-col mt-1 w-full">
-            <Input
-              label="Email *"
-              placeholder="Write your Email"
-              value={email}
-              onChange={handleEmail}
-              onBlur={() =>
-                setErrors((prev) => ({
-                  ...prev,
-                  email: validateEmail(email),
-                }))
-              }
-              error={errors.email}
-            />
+        <div className="gap-[8px] flex flex-col  w-full">
+          <Input
+            label={
+              <>
+                Email <span style={{ color: "red" }}>*</span>
+              </>
+            }
+            placeholder="Write your Email"
+            value={email}
+            onChange={handleEmail}
+            onBlur={() =>
+              setErrors((prev) => ({
+                ...prev,
+                email: validateEmail(email),
+              }))
+            }
+            error={errors.email}
+          />
 
-            <Input
-              label="Phone Number *"
-              placeholder="Write your Phone Number"
-              value={phone}
-              onChange={handlePhone}
-              onBlur={() =>
-                setErrors((prev) => ({
-                  ...prev,
-                  phone: validatePhone(phone),
-                }))
-              }
-              error={errors.phone}
-            />
+          <Input
+            label={
+              <>
+                Phone Number <span style={{ color: "red" }}>*</span>
+              </>
+            }
+            placeholder="Write your Phone Number"
+            value={phone}
+            onChange={handlePhone}
+            onBlur={() =>
+              setErrors((prev) => ({
+                ...prev,
+                phone: validatePhone(phone),
+              }))
+            }
+            error={errors.phone}
+          />
 
-            <Input
-              label="Password *"
-              placeholder="Write your Password"
-              type="password"
-              value={password}
-              onChange={handlePassword}
-              onBlur={() =>
-                setErrors((prev) => ({
-                  ...prev,
-                  password: validatePassword(password),
-                }))
-              }
-              error={errors.password}
-            />
+          <Input
+            label={
+              <>
+                Password <span style={{ color: "red" }}>*</span>
+              </>
+            }
+            placeholder="Write your Password"
+            type="password"
+            value={password}
+            onChange={handlePassword}
+            onBlur={() =>
+              setErrors((prev) => ({
+                ...prev,
+                password: validatePassword(password),
+              }))
+            }
+            error={errors.password}
+          />
 
-            <Input
-              label="Confirm password *"
-              placeholder="Write your Confirm password"
-              type="password"
-              value={confirmPassword}
-              onChange={handleConfirmPassword}
-              onBlur={() =>
-                setErrors((prev) => ({
-                  ...prev,
-                  confirmPassword: validateConfirmPassword(confirmPassword),
-                }))
-              }
-              error={errors.confirmPassword}
-            />
-          </div>
+          <Input
+            label={
+              <>
+                Confirm password <span style={{ color: "red" }}>*</span>
+              </>
+            }
+            placeholder="Write your Confirm password"
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPassword}
+            onBlur={() =>
+              setErrors((prev) => ({
+                ...prev,
+                confirmPassword: validateConfirmPassword(confirmPassword),
+              }))
+            }
+            error={errors.confirmPassword}
+          />
+        </div>
 
-          <div className="gap-[8px] flex mt-10">
-            <button
-              className="w-[128px] min-h-[44px] cursor-pointer border bg-white hover:bg-[#efefef] active:bg-[#e5e5e5] text-black rounded-md"
-              onClick={reduceStep}
-            >
-              &lt; Back
-            </button>
+        <div className="gap-[8px] flex mt-10">
+          <button
+            className="w-[128px] min-h-[44px] cursor-pointer border bg-white hover:bg-[#efefef] active:bg-[#e5e5e5] text-black rounded-md"
+            onClick={reduceStep}
+          >
+            &lt; Back
+          </button>
 
-            <button
-              onClick={handleContinue}
-              disabled={!isValid}
-              className={`w-[280px] min-h-[44px] rounded-md text-white font-medium transition 
+          <button
+            onClick={handleContinue}
+            disabled={!isValid}
+            className={`w-[280px] min-h-[44px] rounded-md text-white font-medium transition cursor-pointer hover:bg-[#39393a]
                 ${
                   isValid
                     ? "bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c]"
-                    : "bg-gray-300 cursor-not-allowed"
+                    : "bg-[#121416] cursor-not-allowed"
                 }`}
-            >
-              Continue 2/3 &gt;
-            </button>
-          </div>
+          >
+            Continue 2/3 &gt;
+          </button>
         </div>
       </div>
     </div>
