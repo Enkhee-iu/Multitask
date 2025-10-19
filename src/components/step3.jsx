@@ -1,4 +1,6 @@
+
 import React, { useState } from "react";
+import myIcon from "../assets/icon.svg";
 
 export function Step3({ increaseStep, reduceStep }) {
   const [dob, setDob] = useState("");
@@ -77,7 +79,7 @@ export function Step3({ increaseStep, reduceStep }) {
               name="dob"
               value={dob}
               onChange={handleDobChange}
-              className={`w-full rounded-md border px-3 py-2 placeholder-gray-400 focus:outline-none ${
+              className={`w-full rounded-md border px-3 py-2 placeholder-gray-400 focus:outline-none cursor-pointer ${
                 errors.dob
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
@@ -89,7 +91,7 @@ export function Step3({ increaseStep, reduceStep }) {
             )}
           </div>
 
-          
+        
           <div className="flex flex-col space-y-1 w-full mt-4">
             <label
               htmlFor="image-upload"
@@ -98,34 +100,34 @@ export function Step3({ increaseStep, reduceStep }) {
               Profile image <span className="text-red-500">*</span>
             </label>
 
-            <div className="w-[416px] h-[180px] border-2 border-solid border-gray-300 rounded-xl flex justify-center items-center bg-gray-50 cursor-pointer">
-              <label
-                htmlFor="image-upload"
-                className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-gray-900"
-              >
-                <input
-                  type="file"
-                  id="image-upload"
-                  name="profile"
-                  hidden
-                  onChange={handleProfileImageChange}
+            <div className="w-[416px] h-[180px] border-2  border-none rounded-xl flex justify-center items-center bg-gray-50 cursor-pointer overflow-hidden">
+              {profileImage ? (
+                <img
+                  src={URL.createObjectURL(profileImage)}
+                  alt="Profile Preview"
+                  className="object-cover w-full h-full rounded-xl"
                 />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
+              ) : (
+                <label
+                  htmlFor="image-upload"
+                  className="flex flex-col items-center gap-2 text-gray-600 cursor-pointer hover:text-gray-900"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
+                  <input
+                    type="file"
+                    id="image-upload"
+                    name="profile"
+                    hidden
+                    accept="image/*"
+                    onChange={handleProfileImageChange}
                   />
-                </svg>
-                <span>Add image</span>
-              </label>
+                 <img
+  src={myIcon}
+  alt="Add Icon"
+  className="w-6 h-6 object-contain"
+/>
+                  <span>Add image</span>
+                </label>
+              )}
             </div>
 
             {errors.profileImage && (
@@ -134,11 +136,12 @@ export function Step3({ increaseStep, reduceStep }) {
           </div>
         </div>
 
+       
         <div className="gap-[8px] flex mt-[8px]">
           <button
             type="button"
             onClick={reduceStep}
-            className="w-[128px] min-h-[44px] border bg-white active:bg-[#e5e5e5] hover:bg-[#e0e0e2] text-black rounded-md"
+            className="w-[128px] min-h-[44px] border-[#cbd5e1] border bg-white active:bg-[#e5e5e5] hover:bg-[#e0e0e2] text-black rounded-md"
           >
             &lt; Back
           </button>
@@ -149,8 +152,8 @@ export function Step3({ increaseStep, reduceStep }) {
             disabled={!isValid}
             className={`w-[280px] min-h-[44px] rounded-md text-white hover:bg-[#39393a] ${
               isValid
-                 ? "bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c]"
-                    : "bg-[#121416] cursor-pointer"
+                ? "bg-[#121416] hover:bg-[#39393a] active:bg-[#4c4c4c]"
+                : "bg-[#121416] cursor-pointer"
             }`}
           >
             Continue 3/3 &gt;
@@ -160,4 +163,5 @@ export function Step3({ increaseStep, reduceStep }) {
     </div>
   );
 }
+
 

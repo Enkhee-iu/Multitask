@@ -189,7 +189,7 @@ export function Step2({ increaseStep, reduceStep }) {
 
         <div className="gap-[8px] flex mt-10">
           <button
-            className="w-[128px] min-h-[44px] cursor-pointer border bg-white hover:bg-[#efefef] active:bg-[#e5e5e5] text-black rounded-md"
+            className="w-[128px] min-h-[44px] cursor-pointer border-[#cbd5e1] border bg-white hover:bg-[#efefef] active:bg-[#e5e5e5] text-black rounded-md"
             onClick={reduceStep}
           >
             &lt; Back
